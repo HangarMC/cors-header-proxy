@@ -12,6 +12,12 @@ export default {
 
     async function handleRequest(request: Request) {
       const url = new URL(request.url);
+      const origin = request.headers.get("Origin");
+
+      // If the request has an Origin header, add CORS headers to the response
+      if (!origin) {
+        return new Response("These are not the droids you are looking for!", { status: 400 });
+      }
 
       const key = url.pathname.split("/")?.[1];
 
@@ -41,7 +47,7 @@ export default {
       response = new Response(response.body, response);
 
       // Set CORS headers
-      response.headers.set("Access-Control-Allow-Origin", request.headers.get("Origin")!);
+      response.headers.set("Access-Control-Allow-Origin", origin);
       // Append to/Add Vary header so browser will cache response correctly
       response.headers.append("Vary", "Origin");
 
