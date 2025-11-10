@@ -41,7 +41,7 @@ export default {
       response = new Response(response.body, response);
 
       // Set CORS headers
-      response.headers.set("Access-Control-Allow-Origin", proxiedUrl.origin);
+      response.headers.set("Access-Control-Allow-Origin", url.origin);
       // Append to/Add Vary header so browser will cache response correctly
       response.headers.append("Vary", "Origin");
 
